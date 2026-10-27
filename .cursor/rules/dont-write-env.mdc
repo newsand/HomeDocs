@@ -1,0 +1,10 @@
+---
+description: Never edit .env; document variables only in .env.example
+alwaysApply: true
+---
+
+# `.env` and `.env.example`
+
+- **Never** create, delete, overwrite, or edit **`.env`**. It holds local secrets.
+- For names, placeholders, or env docs, edit **only** **`.env.example`** (versioned).
+- When adding or changing variables read via `os.getenv` / `os.environ` (or the stack equivalent), update **`.env.example`** (and the README if deploy-relevant) — not anyone's `.env`.

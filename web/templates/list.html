@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pessoas</title>
+<link rel="stylesheet" href="/tokens.css">
+<link rel="stylesheet" href="/app.css">
+</head>
+<body>
+<header class="mast">
+<a class="mast-mark" href="/people">ID-Center</a>
+<a href="/people/new">cadastrar</a>
+</header>
+<main class="case">
+<h1>Pessoas</h1>
+<form class="search" method="get" action="/people">
+<input name="q" value="{{ query }}" aria-label="buscar">
+<button type="submit">buscar</button>
+</form>
+{% if people|length == 0 %}
+<p>Nenhuma pessoa.</p>
+{% endif %}
+<ul class="people">
+{% for person in people %}
+<li><a href="/people/{{ person.ID }}">{{ person.Name }}</a></li>
+{% endfor %}
+</ul>
+</main>
+</body>
+</html>

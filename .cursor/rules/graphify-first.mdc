@@ -1,0 +1,33 @@
+---
+description: Query Graphify before inferring from the tree; update the graph after code edits
+alwaysApply: true
+---
+
+# Graphify first
+
+Before inferring architecture, dependencies, or where something is defined/used, query Graphify **first**:
+
+1. Read `graphify-out/GRAPH_REPORT.md` (god nodes and communities) and/or run:
+
+```bash
+graphify query "<question>" --graph graphify-out/graph.json
+```
+
+2. If `graphify-out/wiki/index.md` exists, navigate it instead of scanning raw files.
+3. Only then open the source files the graph pointed to.
+
+## When to read the tree without the graph
+
+Only if Graphify returned nothing relevant, Graphify is missing (`graphify-out/graph.json` absent), or the user explicitly said to ignore the graph.
+
+## Graphify unavailable
+
+If the CLI or `graphify-out/` is missing, **ask the user** before continuing: install/generate the graph (`legacy-explainer`) or proceed with direct reads. Do not decide alone.
+
+## After editing code
+
+Run `graphify update .` (AST-only, no API cost).
+
+## Token economy
+
+Prefer `graphify query` over broad grep/reads. Open only the files the graph marked relevant.

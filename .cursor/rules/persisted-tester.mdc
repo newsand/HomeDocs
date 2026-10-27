@@ -1,0 +1,26 @@
+---
+description: Existing tests are immutable; cover changes with new tests; only the user deletes obsolete ones
+alwaysApply: true
+---
+
+# Persisted tester
+
+Tests already in the repo **must not be removed or edited** by the agent — including asserts, renames, moves, commenting out, disabling, or deleting test files.
+
+## When a change needs coverage
+
+1. Write **new** tests for the updated behavior.
+2. Leave old tests intact even if they fail after the production change.
+3. Tell the user which tests are **obsolete** and should be **removed manually** (path + short reason).
+
+## Exceptions
+
+- Touch existing tests only if the user **explicitly asked** in this conversation.
+- Creating **new** test files or suites is allowed.
+
+```
+❌ Rewrite or delete tests/test_checkout.py::test_old_flow because the flow changed.
+
+✅ Add tests/test_checkout.py::test_new_flow; warn:
+   "Obsolete (remove manually): tests/test_checkout.py::test_old_flow — replaced by X."
+```

@@ -1,0 +1,4 @@
+- Nomes internos e arquivos dentro de uma operação.
+- Mensagens de erro visíveis em português, claras, sem vazar erro cru do Go ou do SQLite.
+- Caminho do arquivo SQLite e pasta de fotos, desde que locais ao processo.
+- Biblioteca auxiliar compatível com a stack já listada no brief. Não troca Gin, pongo2 nem SQLite.

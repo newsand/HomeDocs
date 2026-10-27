@@ -1,0 +1,44 @@
+---
+description: Binding spec docs; in Plan, a feature to-do is AskQuestion for the 4 answers — not complete until the user replies
+alwaysApply: true
+---
+
+# All for harness
+
+When `/docs` exists, it is binding (see `docs-pointer`). When `docs/harness/` exists (legacy), those files are binding too — not suggestions.
+
+| Change type | Read (`/docs` first, else legacy path) |
+|-------------|----------------------------------------|
+| Architecture | `docs/01-architecture.md` or `docs/harness/architecture_rules.md` |
+| Code style | `docs/05-non-negotiables.md` or `docs/harness/coding_convention.md` |
+| Forbidden patterns | `docs/05-non-negotiables.md` or `docs/harness/forbidden_patterns.md` |
+| Tests | `docs/05-non-negotiables.md` or `docs/harness/testing_expectation.md` |
+| Deploy / ops | `docs/05-non-negotiables.md` or `docs/harness/deployment_rules.md` / `operational_constraints.md` |
+| Domain | `docs/05-non-negotiables.md` or `docs/harness/domain_invariantes.md` |
+| Feature | `docs/03-features/feature-{name}.md` or `docs/harness/features/feature-{name}.md` |
+
+## Workflow (docs → code → graphify)
+
+1. Identify which categories the task touches and read those docs **before** planning or editing.
+2. Reflect the change in `/docs` (or legacy harness) first.
+3. Only then change code, derived from the updated docs.
+4. Never reverse that: code does not dictate the spec.
+
+## Enforcement
+
+- If a generic best practice conflicts with the spec, **the spec wins**. Deviate only if the user overrides in this conversation — and say so.
+- Do not weaken spec constraints silently. Edits to `/docs` or `docs/harness/*` need an explicit user request (except SYNC of code→docs described in `docs-pointer`).
+- If a doc is missing, say so and proceed only with what exists.
+- If the task would violate a constraint and the user has not overridden, stop and report.
+- **Feature gate:** no new feature without `docs/03-features/feature-{name}.md` (or legacy equivalent) with the user's 4 answers. The agent never fills those answers.
+- Design docs derive from feature files.
+- New bootstrap is `/docs` only. Do not mix systems when creating docs.
+
+## Plan mode — feature files
+
+When the plan includes creating `docs/03-features/feature-{name}.md`:
+
+1. That to-do is **AskQuestion** with the 4 mandatory questions (one feature at a time). It is not “write the file”.
+2. The to-do is not `completed` until the user answers in this conversation.
+3. Do not infer, complete, or copy the 4 answers from README, code, or the plan.
+4. Only on the **next** turn after the 4 answers, write the file (answers verbatim) and mark the to-do complete.

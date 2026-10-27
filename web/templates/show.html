@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ name }}</title>
+<link rel="stylesheet" href="/tokens.css">
+<link rel="stylesheet" href="/app.css">
+</head>
+<body>
+<header class="mast">
+<a class="mast-mark" href="/people">ID-Center</a>
+<a href="/people">lista</a>
+</header>
+<main class="case">
+<h1>{{ name }}</h1>
+{% if photo %}
+<img class="portrait" src="/files/{{ photo }}" alt="foto de rosto">
+<button type="button" data-copy="{{ photo }}">copiar</button>
+{% endif %}
+{% if scans|length > 0 %}
+<h2>Scans</h2>
+<div class="scans">
+{% for scan in scans %}
+{% set ext = scan|lower|split:"."|last %}
+{% set images = "avif,bmp,gif,heic,heif,ico,jfif,jpeg,jpg,png,svg,tif,tiff,webp"|split:"," %}
+<div class="scan">
+{% if ext in images %}
+<a class="scan-thumb" href="/files/{{ scan }}"><img src="/files/{{ scan }}" alt="scan"></a>
+{% else %}
+<a href="/files/{{ scan }}">scan</a>
+{% endif %}
+<button type="button" data-copy="{{ scan }}">copiar</button>
+</div>
+{% endfor %}
+</div>
+{% endif %}
+{% for group in groups %}
+<section class="group">
+<h2>{{ group.Title }}</h2>
+<div class="fields">
+{% for field in group.Fields %}
+<div class="field-line">
+<p>{{ field.Label }}: {{ field.Value }}</p>
+<button type="button" data-copy="{{ field.Value }}">copiar</button>
+</div>
+{% endfor %}
+</div>
+</section>
+{% endfor %}
+<div class="actions">
+<a href="/people/{{ id }}/edit">editar</a>
+<form method="post" action="/people/{{ id }}/delete"><button type="submit">apagar</button></form>
+</div>
+</main>
+<script>
+document.querySelectorAll("[data-copy]").forEach(function (button) {
+  button.addEventListener("click", function () {
+    navigator.clipboard.writeText(button.getAttribute("data-copy"));
+  });
+});
+</script>
+</body>
+</html>
